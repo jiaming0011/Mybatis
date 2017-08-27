@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+               "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dao.FilmDao">
+  <!-- 级联查询 -->
+  <resultMap type="film" id="filmMap">
+    <id column="id" property="id"/>
+    <result column="name" property="name"/>
+    <result column="star" property="star"/>
+    <result column="content" property="content"/>
+    <result column="price" property="price"/>
+    <result column="number" property="number"/>
+    <association property="ft" javaType="filmType">
+      <id column="fid" property="id"/>
+      <result column="fname" property="name"/>
+    </association>
+  </resultMap>
+  <select id="list" resultMap="filmMap" parameterType="int">
+     select f.id,f.name,f.star,f.content,f.price,f.number,ft.id fid,ft.name fname from filmtype ft,film f where ft.id=f.filmtype_id and f.filmtype_id=#{tid}
+  </select>
+</mapper>
